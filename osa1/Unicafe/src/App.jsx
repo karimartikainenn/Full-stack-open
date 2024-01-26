@@ -1,34 +1,72 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+const Header = () => {
+  return ( <h1>Anna palautetta</h1>)
+}
 
+const Buttons = ({ good, neutral, bad, setGood, setNeutral, setBad }) => {
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <button onClick={() => setGood(good + 1)}>Hyvä {good}</button>
+      <button onClick={() => setNeutral(neutral + 1)}>Neutraali {neutral}</button>
+      <button onClick={() => setBad(bad + 1)}>Huono {bad}</button>
     </>
+  )
+}
+
+const Statistics = ({ good, neutral, bad }) => {
+  const total = good + neutral + bad
+  const average = (good - bad) / total
+  const positive = good / total * 100
+
+  if (total === 0) {
+    return (
+      <>
+        <h1>Tilastot</h1>
+        <p>Ei yhtään palautetta annettu</p>
+      </>
+    )
+  }
+  return (
+    <table>
+      <tbody>
+      <tr>
+        <th>Tilastot</th>
+      </tr>
+      <tr>
+        <th>Hyvä</th><td>{good}</td> 
+      </tr>
+      <tr>
+        <th>Neutraali</th><td>{neutral}</td>
+      </tr>
+      <tr>
+        <th>Huono</th><td>{bad}</td>
+      </tr>
+      <tr>
+        <th>Yhteensä</th><td>{total}</td>
+      </tr>
+      <tr>
+        <th>Keskiarvo</th><td>{average}</td>
+      </tr>
+      <tr>
+        <th>Positiivinen</th><td>{positive} %</td>
+      </tr>
+      </tbody>
+    </table>
+  )
+}
+
+const App = () => {
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad,setBad] = useState(0)
+
+  return (
+    <div>
+    <Header />
+    <Buttons good={good} neutral={neutral} bad={bad} setGood={setGood} setNeutral={setNeutral} setBad={setBad} />
+    <Statistics good={good} neutral={neutral} bad={bad} />
+    </div>
   )
 }
 
