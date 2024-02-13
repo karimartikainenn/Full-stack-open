@@ -10,6 +10,10 @@ const App = () => {
       name: newName,
       id: persons.length + 1,
     };
+    if (persons.some((person) => person.name === newName)) {
+      alert(`${newName} is already added to phonebook`);
+      return;
+    }
     setPersons(persons.concat(nameObject));
     setNewName("");
   };
@@ -34,7 +38,6 @@ const App = () => {
       {persons.map((person) => (
         <div key={person.name}>{person.name}</div>
       ))}
-      
     </div>
   );
 };
