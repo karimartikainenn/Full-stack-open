@@ -12,7 +12,6 @@ const App = () => {
     { name: "Kari Martikainen", id: 4, number: "0452350455" },
   ]);
 
-  console.log(persons)
 
   const addPerson = (newPerson) => {
     setPersons([...persons, newPerson]);
