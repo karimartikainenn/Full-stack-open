@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 function AddNew({ addPerson, persons }) {
   const [newName, setNewName] = useState("");
@@ -8,13 +9,15 @@ function AddNew({ addPerson, persons }) {
     e.preventDefault();
     const nameObject = {
       name: newName,
-      id: persons.length + 1,
       number: newNumber,
     };
     if (persons.some((person) => person.name === newName)) {
       alert(`${newName} is already added to phonebook`);
       return;
     }
+    axios.post("http://localhost:3001/persons", nameObject).then((response) => {
+      console.log(response);
+    });
     addPerson(nameObject);
     setNewName("");
     setNewNumber("");
