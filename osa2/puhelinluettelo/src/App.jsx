@@ -6,21 +6,13 @@ import Render from "./components/Render";
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: "Arto Hellas", number: "040123456" },
-    { name: "Ada Lovelace", number: "0452359411" },
-    { name: "Dan Abramov", number: "0491209455" },
-    { name: "Kari Martikainen", number: "0452350455" },
+    { name: "Arto Hellas", id: 1, number: "040123456" },
+    { name: "Ada Lovelace", id: 2, number: "0452359411" },
+    { name: "Dan Abramov", id: 3, number: "0491209455" },
+    { name: "Kari Martikainen", id: 4, number: "0452350455" },
   ]);
 
-  useEffect;
-  () => {
-    console.log("effect");
-    axios.get("https://localhost:3001/persons").then((response) => {
-      console.log("promise fulfilled");
-      setPersons(response.data);
-    });
-  },
-    [];
+  console.log(persons)
 
   const addPerson = (newPerson) => {
     setPersons([...persons, newPerson]);
