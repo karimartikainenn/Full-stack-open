@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import AddNew from "./components/AddNew";
 import Filter from "./components/Filter";
 import Render from "./components/Render";
@@ -10,6 +11,16 @@ const App = () => {
     { name: "Dan Abramov", number: "0491209455" },
     { name: "Kari Martikainen", number: "0452350455" },
   ]);
+
+  useEffect;
+  () => {
+    console.log("effect");
+    axios.get("https://localhost:3001/persons").then((response) => {
+      console.log("promise fulfilled");
+      setPersons(response.data);
+    });
+  },
+    [];
 
   const addPerson = (newPerson) => {
     setPersons([...persons, newPerson]);
