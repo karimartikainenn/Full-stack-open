@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-function AddNew({ addPerson, persons }) {
+function AddNew({ addPerson, persons, setPersons }) {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
@@ -11,20 +11,35 @@ function AddNew({ addPerson, persons }) {
       name: newName,
       number: newNumber,
     };
-    if (persons.some((person) => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
-      return;
+
+    const isPerson = persons.find((person) => person.name === newName);
+    if (isPerson) {
+      if (window.confirm(`${newName} on jo lisätty, haluatko päivittää numeron?`)) {
+        axios.put(`http://localhost:3001/persons/${isPerson.id}`, nameObject)
+          .then((response) => {
+            console.log("Päivitys onnistui:", response);
+            const updatedPersons = persons.map((person) =>
+              person.id === isPerson.id ? { ...person, number: newNumber} : person
+            );
+            setPersons(updatedPersons);
+          })
+          .catch((error) => {
+            console.error("Virhe päivityksessä:", error);
+          });
+      }
+    } else {
+      axios.post("http://localhost:3001/persons", nameObject)
+        .then((response) => {
+          console.log("Lisäys onnistui:", response);
+          addPerson(response.data);
+        })
+        .catch((error) => {
+          console.error("Virhe lisäyksessä:", error);
+        });
     }
-    axios.post("http://localhost:3001/persons", nameObject)
-      .then((response) => {
-        console.log(response);
-        addPerson(response.data);
-        setNewName("");
-        setNewNumber("");
-      })
-      .catch((error) => {
-        console.error("Virhe pyynnössä:", error);
-      });
+
+    setNewName("");
+    setNewNumber("");
   };
 
   const handleNoteChange = (e) => {
@@ -42,7 +57,7 @@ function AddNew({ addPerson, persons }) {
         number: <input value={newNumber} onChange={handleNumberChange} />
       </div>
       <div>
-        <br />
+        <br></br>
         <button type="submit">Lisää</button>
       </div>
     </form>
