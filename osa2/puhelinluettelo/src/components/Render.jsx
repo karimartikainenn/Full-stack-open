@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Render = ({ persons, filter, setPersons }) => {
-  const deleteName = (id) => {
-    if (window.confirm(`Haluatko poistaa id: ${id}`)) {
+  const deleteName = (id, name) => {
+    if (window.confirm(`Haluatko poistaa ${name} numeron?`)) {
       axios
         .delete(`http://localhost:3001/persons/${id}`)
         .then((response) => {
@@ -29,7 +29,7 @@ const Render = ({ persons, filter, setPersons }) => {
           <div key={index}>
             <p>
               {person.name} {person.number}{" "}
-              <button type="button" onClick={() => deleteName(person.id)}>
+              <button type="button" onClick={() => deleteName(person.id, person.name)}>
                 Poista
               </button>
             </p>
