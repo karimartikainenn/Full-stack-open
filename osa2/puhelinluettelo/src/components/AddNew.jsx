@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-function AddNew({ addPerson, persons, setPersons }) {
+function AddNew({ addPerson, persons, setPersons, setNotificationMessage }) {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
@@ -22,6 +22,7 @@ function AddNew({ addPerson, persons, setPersons }) {
               person.id === isPerson.id ? { ...person, number: newNumber} : person
             );
             setPersons(updatedPersons);
+            
           })
           .catch((error) => {
             console.error("Virhe päivityksessä:", error);
@@ -31,6 +32,12 @@ function AddNew({ addPerson, persons, setPersons }) {
       axios.post("http://localhost:3001/persons", nameObject)
         .then((response) => {
           console.log("Lisäys onnistui:", response);
+          setNotificationMessage(
+            ` '${nameObject.name}' lisätty!`
+          )
+          setTimeout(()=> {
+            setNotificationMessage(null)
+          }, 5000)
           addPerson(response.data);
         })
         .catch((error) => {

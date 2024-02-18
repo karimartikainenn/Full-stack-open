@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
 
-const Render = ({ persons, filter, setPersons }) => {
+const Render = ({ persons, filter, setPersons, setNotificationMessage }) => {
   const deleteName = (id, name) => {
     if (window.confirm(`Haluatko poistaa ${name} numeron?`)) {
       axios
         .delete(`http://localhost:3001/persons/${id}`)
         .then((response) => {
+          setNotificationMessage(`'${name}' Poistettu!`);
+          setTimeout(() => {
+            setNotificationMessage(null);
+          }, 5000);
           console.log(id);
           console.log("Pyynnön onnistuminen:", response);
           setPersons((prevPersons) =>
@@ -29,7 +33,10 @@ const Render = ({ persons, filter, setPersons }) => {
           <div key={index}>
             <p>
               {person.name} {person.number}{" "}
-              <button type="button" onClick={() => deleteName(person.id, person.name)}>
+              <button
+                type="button"
+                onClick={() => deleteName(person.id, person.name)}
+              >
                 Poista
               </button>
             </p>
