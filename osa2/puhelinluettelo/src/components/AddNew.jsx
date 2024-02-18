@@ -15,13 +15,18 @@ function AddNew({ addPerson, persons }) {
       alert(`${newName} is already added to phonebook`);
       return;
     }
-    axios.post("http://localhost:3001/persons", nameObject).then((response) => {
-      console.log(response);
-    });
-    addPerson(nameObject);
-    setNewName("");
-    setNewNumber("");
+    axios.post("http://localhost:3001/persons", nameObject)
+      .then((response) => {
+        console.log(response);
+        addPerson(response.data);
+        setNewName("");
+        setNewNumber("");
+      })
+      .catch((error) => {
+        console.error("Virhe pyynnössä:", error);
+      });
   };
+
   const handleNoteChange = (e) => {
     setNewName(e.target.value);
   };
@@ -37,7 +42,7 @@ function AddNew({ addPerson, persons }) {
         number: <input value={newNumber} onChange={handleNumberChange} />
       </div>
       <div>
-        <br></br>
+        <br />
         <button type="submit">Lisää</button>
       </div>
     </form>

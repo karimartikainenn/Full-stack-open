@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import personsService from "./services/persons";
 import AddNew from "./components/AddNew";
 import Filter from "./components/Filter";
@@ -12,10 +12,9 @@ const App = () => {
       setPersons(response.data);
     });
   }, []);
-  console.log("render", persons.length, "persons");
 
-  const addPerson = (newPerson) => {
-    setPersons([...persons, newPerson]);
+  const addPerson = (person) => {
+    setPersons([...persons, person]);
   };
 
   const [filter, setFilter] = useState("");
@@ -27,7 +26,7 @@ const App = () => {
       <h2>Lisää numero</h2>
       <AddNew addPerson={addPerson} persons={persons} />
       <h2>Numerot</h2>
-      <Render persons={persons} filter={filter} />
+      <Render persons={persons} filter={filter} setPersons={setPersons} />
     </div>
   );
 };
