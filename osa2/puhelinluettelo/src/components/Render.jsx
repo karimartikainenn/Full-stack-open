@@ -18,6 +18,10 @@ const Render = ({ persons, filter, setPersons, setNotificationMessage }) => {
           );
         })
         .catch((error) => {
+          setNotificationMessage(`'${name}' on jo poistettu serveriltä!`);
+          setTimeout(() => {
+            setNotificationMessage(null);
+          }, 5000);
           console.error("Virhe pyynnössä:", error);
         });
     }
