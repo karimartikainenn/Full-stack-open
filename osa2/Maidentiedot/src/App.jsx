@@ -5,6 +5,7 @@ import "./App.css";
 function App() {
   const [countries, setCountries] = useState([]);
   const [search, setSearch] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState(null);
 
   useEffect(() => {
     axios
@@ -26,16 +27,22 @@ function App() {
     return false;
   });
 
+  const handleCountryClick = (country) => {
+    setSelectedCountry(country);
+  };
+
   const renderCountryInfo = (country) => {
     return (
       <>
         <h2>{country.name.common}</h2>
+        <p>Virallinen nimi: {country.name.official}</p>
         <p>Pääkaupunki: {country.capital}</p>
         <p>Area: {country.area}</p>
+        <p>Väestö: {country.population}</p>
         <h2>Kielet</h2>
         <ul>
           {Object.values(country.languages).map((language, index) => (
-          <li key={index}>{language}</li>
+            <li key={index}>{language}</li>
           ))}
         </ul>
         <img src={country.flags.png} alt={`Flags of ${country.name.common}`} />
@@ -59,8 +66,17 @@ function App() {
           <p>Tarkenna hakuehtoa, yli kymmenen maan tulos.</p>
         ) : (
           filteredCountries.map((item, index) => (
-            <p key={index}>{item.name.common}</p>
+            <div key={index}>
+              <p>{item.name.common}</p>
+              <button onClick={() => handleCountryClick(item)}>Näytä</button>
+            </div>
           ))
+        )}
+        {selectedCountry && (
+          <div>
+            {renderCountryInfo(selectedCountry)}
+            <button onClick={() => setSelectedCountry(null)}>Sulje</button>
+          </div>
         )}
       </div>
     </>
