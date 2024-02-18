@@ -12,7 +12,7 @@ const App = () => {
       setPersons(response.data);
     });
   }, []);
-  console.log("render", persons.length, "notes");
+  console.log("render", persons.length, "persons");
 
   const addPerson = (newPerson) => {
     setPersons([...persons, newPerson]);
@@ -22,11 +22,11 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h2>Puhelinluettelo</h2>
       <Filter setFilter={setFilter} />
-      <h2>Add a new number</h2>
+      <h2>Lisää numero</h2>
       <AddNew addPerson={addPerson} persons={persons} />
-      <h2>Numbers</h2>
+      <h2>Numerot</h2>
       <Render persons={persons} filter={filter} />
     </div>
   );

@@ -1,74 +1,24 @@
 {
   "persons": [
     {
-      "id": "9bxd",
-      "name": "Arto Hellas",
-      "number": "040123456"
+      "id": "d8f8",
+      "name": "Kari Janhunen",
+      "number": "0459414244"
     },
     {
-      "id": "9bax",
-      "name": "Ada Lovelace",
-      "number": "0452359411"
+      "id": "ef35",
+      "name": "testi",
+      "number": "04512353241"
     },
     {
-      "id": "9dad",
-      "name": "Dan Abramov",
-      "number": "0491209455"
-    },
-    {
-      "id": "1bad",
-      "name": "Kari Martikainen",
+      "id": "c057",
+      "name": "Bam im-ari",
       "number": "0452350455"
     },
     {
-      "id": 5,
-      "name": "Made Im-ari",
-      "number": "0459184500"
-    },
-    {
-      "id": "c0c0",
-      "name": "test",
+      "id": "e918",
+      "name": "testi timonen",
       "number": "0452350455"
-    },
-    {
-      "id": "9bad",
-      "name": "test1",
-      "number": "045235044"
-    },
-    {
-      "id": "d734",
-      "name": "Juha Martikainen",
-      "number": "0491859211"
-    },
-    {
-      "id": "e7af",
-      "name": "Juha Martikainen",
-      "number": "0491859211"
-    },
-    {
-      "id": "b415",
-      "name": "Juha Temponen",
-      "number": "0459281934"
-    },
-    {
-      "id": "e53a",
-      "name": "Timo Janhunen",
-      "number": "04591859122"
-    },
-    {
-      "id": "5799",
-      "name": "Timo Janhunen",
-      "number": "04519285911"
-    },
-    {
-      "id": "1b5f",
-      "name": "Heidi Kuutti",
-      "number": "0495819244"
-    },
-    {
-      "id": "eb54",
-      "name": "Bam Im-ari",
-      "number": "0481759122"
     }
   ]
 }

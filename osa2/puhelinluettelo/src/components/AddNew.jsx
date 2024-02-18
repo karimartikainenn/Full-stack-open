@@ -37,7 +37,8 @@ function AddNew({ addPerson, persons }) {
         number: <input value={newNumber} onChange={handleNumberChange} />
       </div>
       <div>
-        <button type="submit">add</button>
+        <br></br>
+        <button type="submit">Lisää</button>
       </div>
     </form>
   );

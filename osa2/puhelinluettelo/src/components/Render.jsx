@@ -1,6 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const Render = ({ persons, filter }) => {
+  const [personsList, setPersons] = useState(persons);
+
+  const deleteName = (id) => {
+    if (window.confirm("Haluatko poistaa numeron?")){
+      window.open("Testi");
+    }
+    axios
+      .delete(`http://localhost:3001/persons/${id}`)
+      .then((response) => {
+        console.log(id)
+        console.log("Pyynnön onnistuminen:", response);
+        setPersons((prevPersons) =>
+          prevPersons.filter((person) => person.id !== id)
+        );
+      })
+      .catch((error) => {
+        console.error("Virhe pyynnössä:", error);
+      });
+  };
+
+  useEffect (() => {
+    setPersons(persons);
+  }, [persons]);
+
   return (
     <div>
       {persons
@@ -10,7 +35,10 @@ const Render = ({ persons, filter }) => {
         .map((person, index) => (
           <div key={index}>
             <p>
-              {person.name} {person.number}
+              {person.name} {person.number}{" "}
+              <button type="button" onClick={() => deleteName(person.id)}>
+                Poista
+              </button>
             </p>
           </div>
         ))}
