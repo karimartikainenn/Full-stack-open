@@ -3,9 +3,24 @@ import axios from "axios";
 import "./App.css";
 
 function App() {
+  const api_key = import.meta.env.VITE_SOME_KEY;
   const [countries, setCountries] = useState([]);
+  const [geocoding, setGeocoding] = useState(null);
   const [search, setSearch] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(
+        `https://api.openweathermap.org/data/2.5/weather?q=Thailand&appid=${api_key}`
+      )
+      .then((response) => {
+        setGeocoding(response.data);
+      })
+      .catch((error) => {
+        console.error("Virhe haetessa sää tietoja:", error);
+      });
+  }, []);
 
   useEffect(() => {
     axios
@@ -32,6 +47,7 @@ function App() {
   };
 
   const renderCountryInfo = (country) => {
+    const weatherInfo = geocoding && geocoding.weather && geocoding.weather[0];
     return (
       <>
         <h2>{country.name.common}</h2>
@@ -46,6 +62,21 @@ function App() {
           ))}
         </ul>
         <img src={country.flags.png} alt={`Flags of ${country.name.common}`} />
+        <p>
+          Latitude: {geocoding && geocoding.coord && geocoding.coord.lon}
+        </p>{" "}
+        <p>
+          Longitude: {geocoding && geocoding.coord && geocoding.coord.lat}
+        </p>{" "}
+        {weatherInfo && (
+          <>
+            <p>Temp: {geocoding.main.temp}</p>
+            <img
+              src={`https://openweathermap.org/img/wn/${weatherInfo.icon}@2x.png`}
+              alt={weatherInfo.description}
+            />
+          </>
+        )}
       </>
     );
   };
