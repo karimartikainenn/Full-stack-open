@@ -29,7 +29,7 @@ function AddNew({ addPerson, persons, setPersons, setNotificationMessage }) {
           });
       }
     } else {
-      axios.post("http://localhost:3001/persons", nameObject)
+      axios.post("/api/persons", nameObject)
         .then((response) => {
           console.log("Lisäys onnistui:", response);
           setNotificationMessage(

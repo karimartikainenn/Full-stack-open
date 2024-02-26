@@ -5,7 +5,7 @@ const Render = ({ persons, filter, setPersons, setNotificationMessage }) => {
   const deleteName = (id, name) => {
     if (window.confirm(`Haluatko poistaa ${name} numeron?`)) {
       axios
-        .delete(`http://localhost:3001/persons/${id}`)
+        .delete(`/api/persons/${id}`)
         .then((response) => {
           setNotificationMessage(`'${name}' Poistettu!`);
           setTimeout(() => {
