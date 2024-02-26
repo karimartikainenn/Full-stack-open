@@ -11,13 +11,22 @@ const App = () => {
   const [notificationMessage, setNotificationMessage] = useState(null)
 
   useEffect(() => {
-    personsService.getAll().then((response) => {
-      setPersons(response.data);
-    });
+    const fetchData = async () => {
+      try {
+        const response = await personsService.getAll();
+        setPersons(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setNotificationMessage("Error fetching data. Please try again later.");
+      }
+    };
+
+    fetchData();
   }, []);
 
   const addPerson = (person) => {
     setPersons([...persons, person]);
+    setNotificationMessage("Person added successfully.");
   };
 
   const [filter, setFilter] = useState("");
