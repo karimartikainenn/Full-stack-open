@@ -23,6 +23,7 @@ function AddNew({ addPerson, setNotificationMessage }) {
       })
       .catch((error) => {
         console.error("Virhe lisäyksessä:", error);
+        setNotificationMessage(`Virhe lisäyksessä: ${error.message}`)
       });
 
     setNewName("");
