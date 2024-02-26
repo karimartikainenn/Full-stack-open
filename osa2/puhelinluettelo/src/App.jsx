@@ -11,9 +11,6 @@ const App = () => {
   const [notificationMessage, setNotificationMessage] = useState(null)
 
   useEffect(() => {
-    personsService.getAll().then((response) => {
-      setPersons(response.data);
-    });
     const fetchData = async () => {
       try {
         const response = await personsService.getAll();
