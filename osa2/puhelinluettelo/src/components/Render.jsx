@@ -1,18 +1,15 @@
 import React from "react";
-import axios from "axios";
+import personsService from "../services/persons"
 
 const Render = ({ persons, filter, setPersons, setNotificationMessage }) => {
   const deleteName = (id, name) => {
     if (window.confirm(`Haluatko poistaa ${name} numeron?`)) {
-      axios
-        .delete(`/api/persons/${id}`)
+      personsService.remove(id)
         .then((response) => {
           setNotificationMessage(`'${name}' Poistettu!`);
           setTimeout(() => {
             setNotificationMessage(null);
           }, 5000);
-          console.log(id);
-          console.log("Pyynnön onnistuminen:", response);
           setPersons((prevPersons) =>
             prevPersons.filter((person) => person.id !== id)
           );

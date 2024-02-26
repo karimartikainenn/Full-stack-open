@@ -1,7 +1,7 @@
-import { useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+import personsService from "../services/persons"
 
-function AddNew({ addPerson, persons, setPersons, setNotificationMessage }) {
+function AddNew({ addPerson, setNotificationMessage }) {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
@@ -12,38 +12,18 @@ function AddNew({ addPerson, persons, setPersons, setNotificationMessage }) {
       number: newNumber,
     };
 
-    const isPerson = persons.find((person) => person.name === newName);
-    if (isPerson) {
-      if (window.confirm(`${newName} on jo lisätty, haluatko päivittää numeron?`)) {
-        axios.put(`http://localhost:3001/persons/${isPerson.id}`, nameObject)
-          .then((response) => {
-            console.log("Päivitys onnistui:", response);
-            const updatedPersons = persons.map((person) =>
-              person.id === isPerson.id ? { ...person, number: newNumber} : person
-            );
-            setPersons(updatedPersons);
-            
-          })
-          .catch((error) => {
-            console.error("Virhe päivityksessä:", error);
-          });
-      }
-    } else {
-      axios.post("/api/persons", nameObject)
-        .then((response) => {
-          console.log("Lisäys onnistui:", response);
-          setNotificationMessage(
-            ` '${nameObject.name}' lisätty!`
-          )
-          setTimeout(()=> {
-            setNotificationMessage(null)
-          }, 5000)
-          addPerson(response.data);
-        })
-        .catch((error) => {
-          console.error("Virhe lisäyksessä:", error);
-        });
-    }
+    personsService.create(nameObject)
+      .then((response) => {
+        console.log("Lisäys onnistui:", response);
+        setNotificationMessage(` '${nameObject.name}' lisätty!`);
+        setTimeout(() => {
+          setNotificationMessage(null);
+        }, 5000);
+        addPerson(response.data);
+      })
+      .catch((error) => {
+        console.error("Virhe lisäyksessä:", error);
+      });
 
     setNewName("");
     setNewNumber("");
@@ -64,7 +44,7 @@ function AddNew({ addPerson, persons, setPersons, setNotificationMessage }) {
         number: <input value={newNumber} onChange={handleNumberChange} />
       </div>
       <div>
-        <br></br>
+        <br />
         <button type="submit">Lisää</button>
       </div>
     </form>
