@@ -40,7 +40,7 @@ function AddNew({ addPerson, setNotificationMessage }) {
   return (
     <form onSubmit={addName}>
       <div>
-        name: <input value={newName} onChange={handleNoteChange} />
+        name: <input value={newName} onChange={handleNoteChange} /> <br></br>
         number: <input value={newNumber} onChange={handleNumberChange} />
       </div>
       <div>

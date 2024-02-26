@@ -5,7 +5,7 @@ function Filter({ setFilter }) {
 
   return (
     <div>
-      filter{" "}
+      Filter{" "}
       <input
         value={filterValue}
         onChange={(e) => {
